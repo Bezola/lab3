@@ -34,9 +34,11 @@ for i in range(n):
     for j in range(n):
         work_list.append(random.randint(-10, 10))
     main_table.append(work_list)
-
+'''
+n = 10
+main_table = [[0] * 10] * 10
 actual_a_table = main_table
-
+'''
 print('Матрица А')
 print('\n'.join('\t'.join(map(str, row)) for row in main_table))
 
@@ -60,15 +62,19 @@ for i in range(len(main_table)):
     if i < temp:
         for j in range(len(main_table[i])):
             if check_even(n):
-                if j < skip_number - 0:
+                if j < skip_number + 1:
                     work_list.append(main_table[i][j])
-                    print(main_table[i][j], end=' ')
             else:
                 if j < skip_number + 2:
                     work_list.append(main_table[i][j])
-                    print(main_table[i][j], end=' ')
         sub_table_c.append(work_list)
-        print('')
+
+print_table = []
+for x in range(len(sub_table_c)):
+    print_table = []
+    for j in range(len(sub_table_c[x]) - 1):
+        print_table.append(sub_table_c[x][j])
+    print(print_table)
 
 sub_table_e = []
 for i in range(len(main_table)):
@@ -86,6 +92,7 @@ for i in range(len(main_table)):
                 if j > skip_number - 0:
                     work_list.append(main_table[i][j])
         sub_table_e.append(work_list)
+
 
 sub_table_d = []
 for i in range(len(main_table)):
@@ -129,41 +136,24 @@ for i in range(len(sub_table_c)):
 
 sub_center_index = int(len(sub_table_c) / 2)
 
-tub_list = []
-zero_even_first_count = 0  # Часть 1 Подматрицы С
-for first_zone_column_index in range(sub_center_index):
-    tub_list.append(first_zone_column_index)
-    if (first_zone_column_index + 1) % 2 == 0:
-        for first_zone_tab_index in tub_list:
-            if sub_table_c[first_zone_tab_index][first_zone_column_index] == 0:
-                zero_even_first_count += 1
+# -------------------------------------------------
+zero_odd_fourth_count = 0
+for i in range(len(sub_table_c)):
+    for j in range(len(sub_table_c)):
+        if (i > j) and ((i + j + 1) > (n // 2)) and sub_table_c[i][j] == 0 and (j + 1) % 2 == 1:
+            zero_odd_fourth_count += 1
 
-while first_zone_column_index > 1:
-    tub_list.remove(first_zone_column_index)
-    first_zone_column_index -= 1
-    if (first_zone_column_index + 1) % 2 == 0:
-        for first_zone_tab_index in tub_list:
-            if sub_table_c[first_zone_tab_index][first_zone_column_index] == 0:
-                zero_even_first_count += 1
 
-column_list = []
-zero_odd_fourth_count = 0  # Часть 4 Подматрицы С
-for column_index in range(sub_center_index):
-    column_list.append(column_index)
-    if (column_index + 1) % 2 == 1:
-        for temp_num in column_list:
-            tab_index = (sub_center_index * 2) - temp_num - 1
-            if sub_table_c[tab_index][column_index] == 0:
-                zero_odd_fourth_count += 1
+zero_even_first_count = 0
+for i in range(1, len(sub_table_c) // 2):
+    for j in range(i):
+        if (j + 1) % 2 == 0 and sub_table_c[i][j] == 0:
+            zero_even_first_count += 1
 
-while column_index > 1:
-    column_list.remove(column_index)
-    column_index -= 1
-    if (column_index + 1) % 2 == 1:
-        for temp_num in column_list:
-            tab_index = (sub_center_index * 2) - temp_num - 1
-            if sub_table_c[tab_index][column_index] == 0:
-                zero_odd_fourth_count += 1
+for i in range(int(len(sub_table_c) // 2), len(sub_table_c)):
+    for j in range(len(sub_table_c) - (i + 1)):
+        if (j + 1) % 2 == 0 and sub_table_c[i][j] == 0:
+            zero_even_first_count += 1
 print(zero_even_first_count, zero_odd_fourth_count)
 
 if zero_odd_fourth_count > zero_even_first_count:
